@@ -1,0 +1,53 @@
+# jvm
+*.class
+
+# logs
+*.log
+logs/
+
+# mac OS
+**/.DS_Store
+
+# python
+*.pyc
+*.egg-info
+__pycache__
+cli/build
+cli/dist
+cli/.coverage
+
+# sbt specific
+.cache
+.history
+.lib/
+dist/*
+target/
+lib_managed/
+src_managed/
+project/boot/
+project/plugins/project/
+
+# Scala-IDE specific
+.scala_dependencies
+.worksheet
+
+# Intellij specific
+.idea/
+*.iml
+
+# Vim specific
+*.swp
+*.swo
+
+/build
+
+# bloop and metals
+.bloop
+.bsp
+.metals
+.ammonite/
+metals.sbt
+metals/project/
+
+# vs code
+.vscode
