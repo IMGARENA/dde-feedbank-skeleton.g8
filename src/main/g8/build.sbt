@@ -18,15 +18,27 @@ lazy val compilerOptions = Seq(
 
 lazy val commonSettings = Seq(
   scalaVersion := "2.13.5",
-  scalaOptions ++= compilerOptions,
+  scalacOptions ++= compilerOptions,
   resolvers ++= Resolver.ddeResolvers,
   organization := "com.imggaming"
 )
 
+lazy val common =
+  (project in file("common"))
+    .settings(
+      commonSettings,
+      libraryDependencies ++= Seq(
+        feedbankCore
+      )
+    )
+
 lazy val $feedname;format="camel"$ =
-  (project in file("""$feedname;format="norm"$"""))
+  (project in file("""$feedname;format="word-only,lower"$"""))
     .settings(
       commonSettings
+    )
+    .dependsOn(
+      common
     )
 
 lazy val service =
@@ -34,7 +46,12 @@ lazy val service =
     .settings(
       name := """dde-feedbank-$sport;format="word-only,lower"$""",
       libraryDependencies ++= Seq(
+        feedbankCore,
+        feedbankAdmin,
         feedbankService
       ),
       commonSettings
+    )
+    .dependsOn(
+      $feedname;format="camel"$
     )

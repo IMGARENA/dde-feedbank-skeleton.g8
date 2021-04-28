@@ -1,4 +1,4 @@
-package com.imggaming.$sport;format="lower"$.feedbank.service
+package com.imggaming.feedbank.$sport;format="word-only,lower"$.service
 
 import scala.concurrent.Future
 
@@ -8,10 +8,11 @@ import akka.http.scaladsl.server.Directives._
 import akka.stream.scaladsl.Sink
 
 import com.imggaming.feedbank.admin.{FeedbankAdmin, FeedbankRouting}
-import com.imggaming.feedbank.model._
+import com.imggaming.feedbank.service.{FeedbankRunner, ServiceActor}
 import com.imggaming.feedbank.service.config.ServiceConfig
 import com.imggaming.feedbank.streaming.FeedStreaming
 import com.imggaming.feedbank.streaming.FeedbankStreaming.ControlPanel
+import com.imggaming.feedbank.$sport;format="word-only,lower"$.$feedname;format="word-only,lower"$.model.{$feedname;format="Camel"$IdIn, $feedname;format="Camel"$PacketIn}
 
 class $sport;format="Camel"$ServiceActor(
   feedbankRunner: FeedbankRunner[Sink[String, NotUsed], $sport;format="Camel"$ServiceActor.CP, Future[Done]]
@@ -35,6 +36,6 @@ object $sport;format="Camel"$ServiceActor {
     implicit cfg: ServiceConfig
   ): Props = Props(new $sport;format="Camel"$ServiceActor(feedbankRunner))
 
-  type CP = FeedStreaming.ControlPanel[$sport;format="Camel"$IdIn, $sport;format="Camel"$PacketIn, NotUsed, NotUsed]
+  type CP = FeedStreaming.ControlPanel[$feedname;format="Camel"$IdIn, $feedname;format="Camel"$PacketIn, NotUsed, NotUsed]
 
 }
