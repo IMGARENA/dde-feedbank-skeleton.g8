@@ -35,7 +35,11 @@ lazy val common =
 lazy val $feedname;format="camel"$ =
   (project in file("""$feedname;format="word-only,lower"$"""))
     .settings(
-      commonSettings
+      commonSettings,
+      libraryDependencies ++= Seq(
+        feedbankAdmin,
+        feedbankService
+      )
     )
     .dependsOn(
       common
@@ -45,11 +49,6 @@ lazy val service =
   (project in file("service"))
     .settings(
       name := """dde-feedbank-$sport;format="word-only,lower"$""",
-      libraryDependencies ++= Seq(
-        feedbankCore,
-        feedbankAdmin,
-        feedbankService
-      ),
       commonSettings
     )
     .dependsOn(
