@@ -13,6 +13,7 @@ import com.imggaming.feedbank.service.config.ServiceConfig
 import com.imggaming.feedbank.streaming.FeedStreaming
 import com.imggaming.feedbank.streaming.FeedbankStreaming.ControlPanel
 import com.imggaming.feedbank.$sport;format="word-only,lower"$.$feedname;format="word-only,lower"$.model.{$feedname;format="Camel"$IdIn, $feedname;format="Camel"$PacketIn}
+import com.imggaming.feedbank.$sport;format="word-only,lower"$.$feedname;format="word-only,lower"$.transformer.$feedname;format="Camel"$Transformer
 
 class $sport;format="Camel"$ServiceActor(
   feedbankRunner: FeedbankRunner[Sink[String, NotUsed], $sport;format="Camel"$ServiceActor.CP, Future[Done]]
@@ -36,6 +37,11 @@ object $sport;format="Camel"$ServiceActor {
     implicit cfg: ServiceConfig
   ): Props = Props(new $sport;format="Camel"$ServiceActor(feedbankRunner))
 
-  type CP = FeedStreaming.ControlPanel[$feedname;format="Camel"$IdIn, $feedname;format="Camel"$PacketIn, NotUsed, NotUsed]
+  type CP = FeedStreaming.ControlPanel[
+    $feedname;format="Camel"$IdIn,
+    $feedname;format="Camel"$PacketIn,
+    $feedname;format="Camel"$Transformer,
+    NotUsed
+  ]
 
 }

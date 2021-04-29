@@ -3,6 +3,7 @@ package com.imggaming.feedbank.$sport;format="word-only,lower"$.$feedname;format
 import akka.NotUsed
 
 import com.imggaming.feedbank.$sport;format="word-only,lower"$.$feedname;format="word-only,lower"$.model._
+import com.imggaming.feedbank.$sport;format="word-only,lower"$.$feedname;format="word-only,lower"$.model.enrichment.Enriched$feedname;format="Camel"$
 import com.imggaming.feedbank.streaming.Transforming
 
 class $feedname;format="Camel"$Transformer
@@ -11,10 +12,10 @@ class $feedname;format="Camel"$Transformer
     $feedname;format="Camel"$PacketIn,
     $feedname;format="Camel"$IdOut,
     $feedname;format="Camel"$PacketOut,
-    NotUsed,
+    Enriched$feedname;format="Camel"$,
     NotUsed
   ] {
 
     override def shape = ???
-  
+
 }
