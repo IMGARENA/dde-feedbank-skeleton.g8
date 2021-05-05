@@ -35,7 +35,7 @@ object Main extends App {
   
   val packetRouter =
     new PacketRouter1(
-      FeedAddress("""$sport;format="word-only,lower"$""", """$feedname;format="word-only,lower"$""") -> feed.flow
+      FeedAddress("""$sport;format="word-only,lower"$""", """$feedname;format="camel"$""") -> feed.flow
     )
   val feedbank = new Feedbank(packetRouter)
   val runner = FeedbankRunner(feedbank)
