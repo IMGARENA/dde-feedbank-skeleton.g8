@@ -26,7 +26,7 @@ class $feedname;format="Camel"$Transformer
       ]
     )(state: Map[$feedname;format="Camel"$IdIn, $feedname;format="Camel"$State]): (immutable.Iterable[O], Map[$feedname;format="Camel"$IdIn, $feedname;format="Camel"$State]) = {
       (
-        Seq(MessageOut($feedname;format="Camel"$PacketOut($feedname;format="Camel"$IdOut(1), 1, Instant.now()))),
+        Seq(MessageOut($feedname;format="Camel"$PacketOut($feedname;format="Camel"$IdOut("1"), 1, Instant.now()))),
         Map(item.packet.id -> $feedname;format="Camel"$State.InitialState)
       )
     }
