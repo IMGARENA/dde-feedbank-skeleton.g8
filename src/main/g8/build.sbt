@@ -1,5 +1,5 @@
 
-lazy val feedbankCore    = "com.imggaming" %% "feedbank-core"    % Version.FeedbankVersion
+lazy val feedbankCore    = "com.imggaming" %% "feedbank-core"    % Version.FeedbankVersion % "test->test;compile->compile"
 lazy val feedbankAdmin   = "com.imggaming" %% "feedbank-admin"   % Version.FeedbankVersion
 lazy val feedbankService = "com.imggaming" %% "feedbank-service" % Version.FeedbankVersion
 
