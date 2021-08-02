@@ -8,7 +8,10 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-18.04
+    runs-on: self-hosted-ubuntu-2004
+    env:
+      AWS_ACCESS_KEY_ID: \${{ secrets.DDE_AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: \${{ secrets.DDE_AWS_SECRET_ACCESS_KEY }}
 
     steps:
       - name: Checkout
@@ -16,6 +19,15 @@ jobs:
 
       - name: Build
         run: scripts/build.sh
-        env:
-          AWS_ACCESS_KEY_ID: \${{ secrets.DDE_AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: \${{ secrets.DDE_AWS_SECRET_ACCESS_KEY }}
+
+      - name: Upload jar to S3
+        run: >
+          aws s3 cp --no-progress \
+            "\$(find . -name 'dde-feedbank-$sport;format="lower"$-service*.jar')" \
+            "s3://dde-artifacts/jars/dde-feedbank-$sport;format="lower"$/dde-feedbank-$sport;format="lower"$-\$(git rev-parse --short=7 HEAD).jar"
+
+      - name: Log in to ECR
+        run: aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 778379310836.dkr.ecr.eu-west-1.amazonaws.com
+
+      - name: Build Docker
+        run: ./docker/build.sh
