@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<configuration>
+  <property name="logDir" value="."/>
+  <property
+    name="defaultPattern"
+    value="%d{yyyy-MM-dd HH:mm:ss.SSS,UTC} %-3level %logger{26}: %msg %ex{full}%n"
+  />
+  <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+    <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+      <pattern>\${defaultPattern}</pattern>
+    </encoder>
+  </appender>
+
+  <logger name="akka" level="\${logback.levels.akka:-INFO}"/>
+  <logger name="com.imggaming" level="\${logback.levels.imggaming:-INFO}"/>
+
+  <root level="\${logback.levels.root:-INFO}">
+    <appender-ref ref="STDOUT"/>
+  </root>
+</configuration>
