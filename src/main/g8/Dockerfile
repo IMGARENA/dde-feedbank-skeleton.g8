@@ -3,8 +3,11 @@ FROM giftig/sbt:2.13.6
 WORKDIR /build
 COPY . /build
 
+ARG AWS_ACCESS_KEY_ID AWS_SECRET_ACCESS_KEY AWS_DEFAULT_REGION
+ENV AWS_ACCESS_KEY_ID=\${AWS_ACCESS_KEY_ID} AWS_SECRET_ACCESS_KEY=\${AWS_SECRET_ACCESS_KEY} AWS_DEFAULT_REGION=\${AWS_DEFAULT_REGION}
+
 RUN ["scripts/build.sh"]
-RUN ["/bin/bash", "mv \$(find /build -iname 'dde-feedbank-$sport;format="lowercase"$-service*.jar') /build/app.jar"]
+RUN /bin/bash -c "mv \$(find /build -iname 'dde-feedbank-$sport;format="lowercase"$-service*.jar') /build/app.jar"
 
 
 FROM openjdk:11

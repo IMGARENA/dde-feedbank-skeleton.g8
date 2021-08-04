@@ -30,4 +30,4 @@ jobs:
         run: aws ecr get-login-password --region eu-west-1 | docker login --username AWS --password-stdin 778379310836.dkr.ecr.eu-west-1.amazonaws.com
 
       - name: Build Docker
-        run: ./docker/build.sh
+        run: ./scripts/docker-build.sh
