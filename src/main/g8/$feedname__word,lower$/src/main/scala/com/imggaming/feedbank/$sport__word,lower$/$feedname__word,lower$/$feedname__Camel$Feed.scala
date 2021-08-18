@@ -1,11 +1,10 @@
 package com.imggaming.feedbank.$sport;format="word,lower"$.$feedname;format="word,lower"$
 
-import scala.concurrent.{ExecutionContext, Future}
+import scala.concurrent.ExecutionContext
 import scala.concurrent.duration._
 
 import akka.NotUsed
 import akka.actor.ActorSystem
-import akka.stream.Materializer
 import akka.util.Timeout
 
 import com.imggaming.feedbank.codec.{
@@ -17,7 +16,6 @@ import com.imggaming.feedbank.enrichment.NoopEnricher
 import com.imggaming.feedbank.metrics.{FeedMetrics, StageName}
 import com.imggaming.feedbank.model.FeedAddress
 import com.imggaming.feedbank.state.EnrichmentCache
-import com.imggaming.feedbank.state.AdminMessages.{Request, Response}
 import com.imggaming.feedbank.state.ops._
 import com.imggaming.feedbank.streaming._
 import com.imggaming.feedbank.streaming.notification.NoopNotifier
@@ -37,14 +35,6 @@ object $feedname;format="Camel"$Feed
 
   val AddressIn = FeedAddress("$sport;format="word,lower"$", "$feedname;format="camel"$")
   val AddressOut = FeedAddress("$sport;format="word,lower"$", "$feedname;format="camel"$")
-
-  def transformerClient(
-    implicit io: AdminIO[$feedname;format="Camel"$IdIn, $feedname;format="Camel"$Transformer.State],
-    mat: Materializer,
-    timeout: Timeout
-  ): TransformerQuerying[$feedname;format="Camel"$IdIn, $feedname;format="Camel"$Transformer.State] = {
-    new AdminIOTransformerClient[$feedname;format="Camel"$IdIn, $feedname;format="Camel"$Transformer.State]
-  }
 
   def apply(
     cleanupPostStartPurgeDelay: Option[FiniteDuration],
@@ -95,14 +85,8 @@ object $feedname;format="Camel"$Feed
       new $feedname;format="Camel"$Transformer()(m.forStage(StageName.Transformer))
     }
     val cleanupReporter = {
-      // FIXME(TEMPLATE): Temporary workaround for DDE-1067; transformer will not be cleaned up
-      // This is essentially a copy of UnsupportedTransformerClient but with a State type
-      implicit val transformerClient = new TransformerQuerying[$feedname;format="Camel"$IdIn, $feedname;format="Camel"$Transformer.State] {
-        override def query(
-          q: Request[$feedname;format="Camel"$IdIn, $feedname;format="Camel"$Transformer.State]
-        ): Future[Response[$feedname;format="Camel"$IdIn, $feedname;format="Camel"$Transformer.State]] = {
-          Future.failed(new UnsupportedComponentException)
-        }
+      implicit val transformerClient = {
+        new AdminIOTransformerClient[$feedname;format="Camel"$IdIn, $feedname;format="Camel"$Transformer.State]
       }
       val props = CleanupScheduler.props(cleanupPostStartPurgeDelay, cleanupPostCompletePurgeDelay)
       new CleanupReporter[$feedname;format="Camel"$IdIn](system.actorOf(props))

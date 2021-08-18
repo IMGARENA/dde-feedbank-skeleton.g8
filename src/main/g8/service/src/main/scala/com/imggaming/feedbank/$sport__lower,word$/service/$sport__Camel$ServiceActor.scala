@@ -10,7 +10,7 @@ import com.imggaming.feedbank.model.FeedAddress
 import com.imggaming.feedbank.service.ServiceActor
 import com.imggaming.feedbank.service.config.ServiceConfig
 import com.imggaming.feedbank.service.sync.SyncWorker
-import com.imggaming.feedbank.state.ops.TransformerQuerying
+import com.imggaming.feedbank.state.ops.AdminIOTransformerClient
 import com.imggaming.feedbank.streaming._
 import com.imggaming.feedbank.streaming.FeedbankStreaming.ControlPanel
 import com.imggaming.feedbank.streaming.stateful.StatefulFlow.AdminIO
@@ -32,9 +32,8 @@ class $sport;format="Camel"$ServiceActor(
     cp: ControlPanel[CP],
     syncStatus: Future[Done]
   ): FeedbankRouting = {
-    implicit val transformerClient: TransformerQuerying[$feedname;format="Camel"$IdIn, $feedname;format="Camel"$Transformer.State] = {
-      implicit val io = cp.feedControls.packet.transformer
-      $feedname;format="Camel"$Feed.transformerClient
+    implicit val transformerClient = {
+      new AdminIOTransformerClient[$feedname;format="Camel"$IdIn, $feedname;format="Camel"$Transformer.State]
     }
 
     val feedRoute = new FeedRoute[

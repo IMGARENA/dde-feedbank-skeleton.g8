@@ -3,7 +3,7 @@ import com.typesafe.sbt.SbtGit.git
 val akkaCoreVersion = "2.6.9"
 val akkaHttpVersion = "10.2.0"
 
-val feedbankVersion = "0.7.2"
+val feedbankVersion = "0.7.3-SNAPSHOT"
 
 lazy val commonDeps = Seq(
   "ch.qos.logback" % "logback-classic" % "1.2.3",
